@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Portfolio & Projects</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    /* Generic Reset */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Segoe UI', Arial, sans-serif; background: #f8fafc; color: #222; line-height: 1.6; }
+    nav { background: #2d3748; color: #fff; padding: 1em 2em; display: flex; justify-content: space-between; align-items: center;}
+    nav a { color: #fff; text-decoration: none; margin: 0 1em; transition: color .2s; }
+    nav a:hover { color: #63b3ed; }
+    .container { max-width: 1100px; margin: 2em auto; padding: 1em; background: #fff; border-radius: 12px; box-shadow: 0 6px 24px #e2e8f0; }
+    section { margin-bottom: 2em; }
+    h2 { margin-bottom: .5em; color: #2b6cb0; }
+    /* About */
+    .about { display: flex; flex-wrap: wrap; gap: 2em; }
+    .about-text { flex: 2 1 200px;}
+    .about-photo { flex:1 1 120px; display:flex; align-items:center;}
+    .about-photo img { border-radius: 50%; width:100px;height:100px;}
+    /* Projects Grid */
+    .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 1em; }
+    .project-card { background: #edf2f7; padding: 1em; border-radius: 8px; box-shadow: 0 2px 8px #e2e8f0; }
+    /* To-Do/Notes */
+    .todo-app input, .todo-app textarea {
+      padding: .5em; border-radius: 4px; border: 1px solid #cbd5e1; margin-bottom: .5em;
+    }
+    .todo-list { list-style: none; }
+    .todo-item { display: flex; align-items: center; justify-content: space-between; padding: .5em 0; border-bottom: 1px solid #e2e8f0;}
+    .todo-item .remove { color: #e53e3e; cursor: pointer;}
+    /* Product Page */
+    .filters { display: flex; flex-wrap: wrap; gap: 1em; margin-bottom: 1em;}
+    .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1em;}
+    .product-card { border: 1px solid #e2e8f0; border-radius: 8px; padding: 1em; background: #f1f5f9;}
+    .product-title { font-size: 1.1em; margin-bottom: .5em;}
+    .stars { color: #fbbf24;}
+    /* Contact */
+    .contact-form input, .contact-form textarea {
+      width: 100%; padding: .5em; margin-bottom: .7em; border-radius: 4px; border:1px solid #bcd;}
+    .contact-form button { padding: .5em 2em; background: #4299e1; color:#fff; border: none; border-radius: 5px;}
+    /* Responsive */
+    @media (max-width:700px){
+      .about { flex-direction:column; }
+      nav { flex-direction: column;}
+      .filters { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav>
+    <div>My Portfolio</div>
+    <div>
+      <a href="#about">About</a>
+      <a href="#projects">Projects</a>
+      <a href="#todo">To-Do/Notes</a>
+      <a href="#products">Products</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+  <div class="container">
+    <!-- About Section -->
+    <section id="about">
+      <h2>About</h2>
+      <div class="about">
+        <div class="about-text">
+          <p>Hi! I'm a Computer Science student passionate about building efficient, user-friendly web applications.
+            I enjoy programming, problem-solving with algorithms, and learning about AI, graphics and responsive design.</p>
+        </div>
+        <div class="about-photo">
+          <img src="https://up.yimg.com/ib/th/id/OIP.65cr4DZsNGAvYWUr6Rg5qQHaHa?pid=Api&rs=1&c=1&qlt=95&w=106&h=106" alt="profile" />
+        </div>
+      </div>
+    </section>
+    <!-- Projects Section -->
+    <section id="projects">
+      <h2>Projects</h2>
+      <div class="projects-grid">
+        <div class="project-card">
+          <strong>To-Do List App</strong>
+          <p>A responsive To-Do/Note App that saves tasks using localStorage.</p>
+        </div>
+        <div class="project-card">
+          <strong>Product Filters Page</strong>
+          <p>Shop page UI with sorting and filtering by category, price, and rating.</p>
+        </div>
+        <div class="project-card">
+          <strong>Responsive Portfolio</strong>
+          <p>Personal site made with clean HTML, CSS, and JavaScript.</p>
+        </div>
+      </div>
+    </section>
+    <!-- To-Do/Notes App Section -->
+    <section id="todo">
+      <h2>To-Do / Note-Taking App</h2>
+      <div class="todo-app">
+        <input type="text" id="todoInput" placeholder="Enter a new task or note">
+        <button onclick="addTodo()">Add</button>
+        <ul class="todo-list" id="todoList"></ul>
+      </div>
+    </section>
+    <!-- Product Page Section -->
+    <section id="products">
+      <h2>Product Page</h2>
+      <div class="filters">
+        <select id="categoryFilter">
+          <option value="All">All Categories</option>
+          <option value="Book">Books</option>
+          <option value="Phone">Phones</option>
+          <option value="Accessory">Accessories</option>
+        </select>
+        <input type="number" id="minPrice" placeholder="Min Price">
+        <input type="number" id="maxPrice" placeholder="Max Price">
+        <select id="sortCriteria">
+          <option value="none">Sort By</option>
+          <option value="price-asc">Price Low to High</option>
+          <option value="price-desc">Price High to Low</option>
+          <option value="rating">Rating</option>
+        </select>
+        <button onclick="filterProducts()">Apply</button>
+      </div>
+      <div class="product-grid" id="productGrid"></div>
+    </section>
+    <!-- Contact Section -->
+    <section id="contact">
+      <h2>Contact</h2>
+      <form class="contact-form" onsubmit="event.preventDefault(); alert('Message sent! (mock)'); this.reset();">
+        <input type="text" placeholder="Name" required>
+        <input type="email" placeholder="Email" required>
+        <textarea placeholder="Message" required rows="4"></textarea>
+        <button type="submit">Send</button>
+      </form>
+    </section>
+  </div>
+  <script>
+    // --- To-Do/Note-Taking App Logic ---
+    function loadTodos() {
+      const todos = JSON.parse(localStorage.getItem('todos')) || [];
+      const list = document.getElementById('todoList');
+      list.innerHTML = '';
+      todos.forEach((item, idx) => {
+        const li = document.createElement('li');
+        li.className = 'todo-item';
+        li.innerHTML = `<span>${item}</span> 
+          <span class="remove" onclick="removeTodo(${idx})">&#10005;</span>`;
+        list.appendChild(li);
+      });
+    }
+    function addTodo() {
+      const input = document.getElementById('todoInput');
+      let val = input.value.trim();
+      if(!val) return;
+      let todos = JSON.parse(localStorage.getItem('todos')) || [];
+      todos.push(val);
+      localStorage.setItem('todos', JSON.stringify(todos));
+      input.value = '';
+      loadTodos();
+    }
+    function removeTodo(idx) {
+      let todos = JSON.parse(localStorage.getItem('todos')) || [];
+      todos.splice(idx,1);
+      localStorage.setItem('todos', JSON.stringify(todos));
+      loadTodos();
+    }
+    window.addEventListener('DOMContentLoaded', loadTodos);
+    // --- Product Page Logic ---
+    const products = [
+      {title: "Learning Python", category: "Book", price: 499, rating: 4.5},
+      {title: "Android Mobile", category: "Phone", price: 8999, rating: 4.0},
+      {title: "Bluetooth Headset", category: "Accessory", price: 1499, rating: 4.7},
+      {title: "Data Structures Book", category: "Book", price: 399, rating: 4.8},
+      {title: "Silicon Cover", category: "Accessory", price: 399, rating: 4.3}
+    ];
+    function showProducts(prodList){
+      document.getElementById('productGrid').innerHTML = prodList.map(p =>
+        `<div class="product-card">
+          <div class="product-title">${p.title}</div>
+          <div>Category: ${p.category}</div>
+          <div>Price: ₹${p.price}</div>
+          <div>Rating: <span class="stars">${'★'.repeat(Math.round(p.rating))}</span> (${p.rating})</div>
+        </div>`
+      ).join('');
+    }
+    function filterProducts(){
+      let cat = document.getElementById('categoryFilter').value;
+      let min = +document.getElementById('minPrice').value || 0;
+      let max = +document.getElementById('maxPrice').value || Number.MAX_SAFE_INTEGER;
+      let sort = document.getElementById('sortCriteria').value;
+      let filtered = products.filter(p =>
+        (cat === "All" || p.category === cat) &&
+        p.price >= min &&
+        p.price <= max
+      );
+      if(sort === "price-asc") filtered.sort((a,b) => a.price-b.price);
+      else if(sort === "price-desc") filtered.sort((a,b) => b.price-a.price);
+      else if(sort === "rating") filtered.sort((a,b) => b.rating-a.rating);
+      showProducts(filtered);
+    }
+    window.addEventListener('DOMContentLoaded', ()=>showProducts(products));
+  </script>
+</body>
+</html>
